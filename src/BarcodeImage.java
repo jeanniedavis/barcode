@@ -142,9 +142,18 @@ public class BarcodeImage implements Cloneable
          System.out.println(line);
       }
    }
-   
+   /*
    public BarcodeImage clone()
    {
+      BarcodeImage clone = new BarcodeImage();
       
+      boolean[][] cloneImageData = new boolean[MAX_HEIGHT][];
+      for(int i = 0; i < MAX_HEIGHT; i++)
+      {
+         cloneImageData[i] = imageData[i].clone();
+      }
+      
+      return clone;
    }
+   */
 }
