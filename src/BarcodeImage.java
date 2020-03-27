@@ -1,10 +1,12 @@
-
+//Holds a barcode image size 30x65 as a 2d array of booleans.
+//If image is invalid, creates blank image.
 public class BarcodeImage implements Cloneable
 {
    public static final int MAX_HEIGHT = 30;
    public static final int MAX_WIDTH = 65;
-   private boolean[][] imageData;
+   private boolean[][] imageData; //Stores pixels of barcode
 
+   //Default Constructor
    public BarcodeImage()
    {
       imageData = new boolean[MAX_HEIGHT][MAX_WIDTH];
@@ -18,6 +20,7 @@ public class BarcodeImage implements Cloneable
       }
    }
    
+   //Constructor
    public BarcodeImage(String[] strData)
    {
       imageData = new boolean[MAX_HEIGHT][MAX_WIDTH];
@@ -94,6 +97,7 @@ public class BarcodeImage implements Cloneable
       }
    }
    
+   //Validates size of incoming String array.
    private boolean checkSize(String[] data)
    {
       //First check is array is null
@@ -120,6 +124,8 @@ public class BarcodeImage implements Cloneable
       return true;  
    }
    
+   //Displays the current barcode image to console.
+   //Used for testing only.
    public void displayToConsole()
    {
       String line;
@@ -142,18 +148,31 @@ public class BarcodeImage implements Cloneable
          System.out.println(line);
       }
    }
-   /*
+   
+   //Implements the clonable interface
    public BarcodeImage clone()
    {
-      BarcodeImage clone = new BarcodeImage();
-      
-      boolean[][] cloneImageData = new boolean[MAX_HEIGHT][];
-      for(int i = 0; i < MAX_HEIGHT; i++)
+      try
       {
-         cloneImageData[i] = imageData[i].clone();
+         //Clone BarcodeImage object
+         BarcodeImage copy = (BarcodeImage)super.clone();
+         
+         //Clone each row of imageData 2d boolean array to copy
+         copy.imageData = new boolean[MAX_HEIGHT][];
+         for(int row = 0; row < MAX_HEIGHT; row++)
+         {
+            copy.imageData[row] = imageData[row].clone();
+         }
+         
+         return copy;
+      } 
+      //If cloning is not supported, return null BarcodeImage object.
+      catch (CloneNotSupportedException e)
+      {
+         BarcodeImage failedCopy = null;
+         return failedCopy;
       }
       
-      return clone;
    }
-   */
+   
 }

@@ -72,5 +72,15 @@ public class testBarcodeImage
       System.out.println("\nTest Four:");
       //Should output block of stars.
       testFour.displayToConsole();
+      
+      //Test Clonable
+      BarcodeImage cloneImage = testOne.clone();
+      System.out.println("\n\n---Testing Clone()---");
+      System.out.println("\nOriginal Hashcode: " + testOne.hashCode());
+      testOne.displayToConsole();
+      System.out.println("\nClone Hashcode: " + cloneImage.hashCode());
+      cloneImage.displayToConsole();
    }
+   
+   
 }
