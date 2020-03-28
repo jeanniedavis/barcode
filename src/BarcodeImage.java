@@ -150,29 +150,19 @@ public class BarcodeImage implements Cloneable
    }
    
    //Implements the clonable interface
-   public BarcodeImage clone()
+   public BarcodeImage clone() throws CloneNotSupportedException
    {
-      try
-      {
-         //Clone BarcodeImage object
-         BarcodeImage copy = (BarcodeImage)super.clone();
+      //Clone BarcodeImage object
+      BarcodeImage copy = (BarcodeImage)super.clone();
          
-         //Clone each row of imageData 2d boolean array to copy
-         copy.imageData = new boolean[MAX_HEIGHT][];
-         for(int row = 0; row < MAX_HEIGHT; row++)
-         {
-            copy.imageData[row] = imageData[row].clone();
-         }
-         
-         return copy;
-      } 
-      //If cloning is not supported, return null BarcodeImage object.
-      catch (CloneNotSupportedException e)
+      //Clone each row of imageData 2d boolean array to copy
+      copy.imageData = new boolean[MAX_HEIGHT][];
+      for(int row = 0; row < MAX_HEIGHT; row++)
       {
-         BarcodeImage failedCopy = null;
-         return failedCopy;
+         copy.imageData[row] = imageData[row].clone();
       }
-      
+         
+      return copy;
    }
    
 }

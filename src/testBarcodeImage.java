@@ -81,7 +81,15 @@ public class testBarcodeImage
       testFour.displayToConsole();
       
       //Test Clonable
-      BarcodeImage cloneImage = testOne.clone();
+      BarcodeImage cloneImage;
+      try
+      {
+         cloneImage = testOne.clone();
+      } catch (CloneNotSupportedException e)
+      {
+         // TODO Auto-generated catch block
+         cloneImage = new BarcodeImage();
+      }
       //Change clone by adding extra line at the bottom of the one.
       //This shows that it actually made a deep copy.
       for(int i = 0; i < 10; i++)
