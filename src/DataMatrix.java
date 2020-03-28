@@ -23,23 +23,29 @@ public class DataMatrix implements BarcodeIO
       
       image = new BarcodeImage();
    }
-   
+
    public DataMatrix(BarcodeImage image)//image only
    {
       if(scan(image) == true)
-         this.image = image;
+         System.out.print("BarcodeImage set successfully");
 
       else    
+      {
          this.image = new BarcodeImage();
+         System.out.print("Scan returned false. BarcodeImage set to empty");
+      }
    }
    
    public DataMatrix(String text)//text only
    {
       if(readText(text) == true)
-         this.text = text;
+         System.out.print("Text string set successfully");
       
       else
+      {
          text = "";
+         System.out.print("readText returned false. Text string set to empty");
+      }
    }
    
    //Accessors - Bryce
