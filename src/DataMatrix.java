@@ -30,7 +30,7 @@ public class DataMatrix implements BarcodeIO
       {
          actualWidth = 0;
          actualHeight = 0;
-         this.image = new BarcodeImage();
+         image = new BarcodeImage();
       }
     
    }
