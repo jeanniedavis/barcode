@@ -96,6 +96,7 @@ public class testBarcodeImage
       {
          cloneImage.setPixel(0, i, true);
       }
+     
       System.out.println("\n\n---Testing Clone()---");
       System.out.println("\nOriginal Hashcode: " + testOne.hashCode());
       testOne.displayToConsole();
