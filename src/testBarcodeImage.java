@@ -3,6 +3,13 @@ public class testBarcodeImage
 {
    public static void main(String[] args)
    {
+      System.out.println("---Test Default Constructor Barcode()---");
+      BarcodeImage defaultImage = new BarcodeImage();
+      System.out.println("Test One:");
+      //Should print out blanks
+      defaultImage.displayToConsole();
+      
+      System.out.println("\n\n---Test Constructor Barcode(String[] strData)---");
       String[] oneStrArray = 
          {
                "        ",
@@ -74,7 +81,22 @@ public class testBarcodeImage
       testFour.displayToConsole();
       
       //Test Clonable
-      BarcodeImage cloneImage = testOne.clone();
+      BarcodeImage cloneImage;
+      try
+      {
+         cloneImage = testOne.clone();
+      } catch (CloneNotSupportedException e)
+      {
+         // TODO Auto-generated catch block
+         cloneImage = new BarcodeImage();
+      }
+      //Change clone by adding extra line at the bottom of the one.
+      //This shows that it actually made a deep copy.
+      for(int i = 0; i < 10; i++)
+      {
+         cloneImage.setPixel(0, i, true);
+      }
+     
       System.out.println("\n\n---Testing Clone()---");
       System.out.println("\nOriginal Hashcode: " + testOne.hashCode());
       testOne.displayToConsole();
