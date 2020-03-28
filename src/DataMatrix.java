@@ -17,35 +17,32 @@ public class DataMatrix implements BarcodeIO
    public DataMatrix()//default
    {
       text = "";
-      
       actualWidth = 0;
-      actualHeight = 0;
-      
+      actualHeight = 0; 
       image = new BarcodeImage();
    }
 
    public DataMatrix(BarcodeImage image)//image only
    {
-      if(scan(image) == true)
-         System.out.print("BarcodeImage set successfully");
-
-      else    
+      text = "";
+      
+      if(scan(image) == false)
       {
+         actualWidth = 0;
+         actualHeight = 0;
          this.image = new BarcodeImage();
-         System.out.print("Scan returned false. BarcodeImage set to empty");
       }
+    
    }
    
    public DataMatrix(String text)//text only
    {
-      if(readText(text) == true)
-         System.out.print("Text string set successfully");
+      actualWidth = 0;
+      actualHeight = 0;
+      image = new BarcodeImage();
       
-      else
-      {
+      if(readText(text) == false)
          text = "";
-         System.out.print("readText returned false. Text string set to empty");
-      }
    }
    
    //Accessors - Bryce
