@@ -1,14 +1,58 @@
 //Stubs for the DataMatrix Class
 //Labeled who is doing which sections.
+
 public class DataMatrix implements BarcodeIO
 {
    //DATA - Bryce
+   public static final char BLACK_CHAR = '*';
+   public static final char WHITE_CHAR = ' ';  
    
+   private BarcodeImage image;
+   private String text;
+   
+   private int actualWidth;
+   private int actualHeight;
+ 
    //Constructors - Bryce
+   public DataMatrix()//default
+   {
+      text = "";
+      
+      actualWidth = 0;
+      actualHeight = 0;
+      
+      image = new BarcodeImage();
+   }
+   
+   public DataMatrix(BarcodeImage image)//image only
+   {
+      if(scan(image) == true)
+         this.image = image;
+
+      else    
+         this.image = new BarcodeImage();
+   }
+   
+   public DataMatrix(String text)//text only
+   {
+      if(readText(text) == true)
+         this.text = text;
+      
+      else
+         text = "";
+   }
    
    //Accessors - Bryce
+   public int getActualWidth()
+   {
+      return actualWidth;
+   }
    
-   @Override
+   public int getActualHeight()
+   {
+      return actualHeight;
+   }
+   
    //Jeannie
    public boolean scan(BarcodeImage bc)
    {
@@ -16,7 +60,7 @@ public class DataMatrix implements BarcodeIO
       return false;
    }
 
-   @Override
+
    //Harsandeep
    public boolean readText(String text)
    {
@@ -24,7 +68,6 @@ public class DataMatrix implements BarcodeIO
       return false;
    }
 
-   @Override
    //Jeannie
    public boolean generateImageFromText()
    {
@@ -32,7 +75,6 @@ public class DataMatrix implements BarcodeIO
       return false;
    }
 
-   @Override
    //Harsandeep
    public boolean translateImageToText()
    {
@@ -40,7 +82,6 @@ public class DataMatrix implements BarcodeIO
       return false;
    }
 
-   @Override
    //Jeannie
    public void displayTextToConsole()
    {
@@ -48,7 +89,6 @@ public class DataMatrix implements BarcodeIO
 
    }
 
-   @Override
    //Bryce
    public void displayImageToConsole()
    {
@@ -69,7 +109,7 @@ public class DataMatrix implements BarcodeIO
    }
    
    //Bryce
-   private int computeSignlHeight()
+   private int computeSignalHeight()
    {
       
    }
