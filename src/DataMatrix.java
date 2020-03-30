@@ -64,11 +64,11 @@ public class DataMatrix implements BarcodeIO
    }
 
 
-   //Harsandeep
+ //Takes in a string variable and sets the data member "text"
    public boolean readText(String text)
    {
-      // TODO Auto-generated method stub
-      return false;
+   this.text = text;
+   return true;
    }
 
    //Jeannie
@@ -81,9 +81,15 @@ public class DataMatrix implements BarcodeIO
    //Harsandeep
    public boolean translateImageToText()
    {
-      // TODO Auto-generated method stub
-      return false;
-   }
+	   char colChar[] = new char[actualWidth - 1];
+	   for (int i = 1; i < actualWidth - 1; i++)
+	   {
+		   colChar[i] = this.readCharFromCol(i);
+	   }
+	   String colString = new String(colChar);
+	   this.text = colString;
+	   return true;
+	  }
 
    //Jeannie
    public void displayTextToConsole()
@@ -102,7 +108,13 @@ public class DataMatrix implements BarcodeIO
    //Harsandeep
    private void cleanImage()
    {
-      
+	   for (int i = 0; i < BarcodeImage.MAX_HEIGHT; i++)
+	   {
+		   for (int j = 0; j < BarcodeImage.MAX_WIDTH; j++)
+		   {
+			   image.setPixel(i, j, false);
+		   }
+	   } 
    }
    
    //Bryce
