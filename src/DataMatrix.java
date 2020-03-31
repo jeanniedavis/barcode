@@ -175,14 +175,14 @@ public class DataMatrix implements BarcodeIO
    //Bryce
    private int computeSignalWidth()
    {
-      return 0;
+      
       
    }
    
    //Bryce
    private int computeSignalHeight()
    {
-      return 0;
+      
    }
 
 }
