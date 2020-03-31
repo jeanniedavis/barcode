@@ -74,7 +74,8 @@ public class BarcodeImage implements Cloneable
    
    boolean getPixel(int row, int col)
    {
-      if(row < 0 || col < 0 || row >= imageData.length || col >= imageData[0].length)
+      if(row < 0 || col < 0 || row >= imageData.length 
+            || col >= imageData[0].length)
       {
          return false;
       }
@@ -86,7 +87,8 @@ public class BarcodeImage implements Cloneable
    
    boolean setPixel(int row, int col, boolean value)
    {
-      if(row < 0 || col < 0 || row >= imageData.length || col >= imageData[0].length)
+      if(row < 0 || col < 0 || row >= imageData.length 
+            || col >= imageData[0].length)
       {
          return false;
       }

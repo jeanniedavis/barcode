@@ -95,10 +95,31 @@ public class DataMatrix implements BarcodeIO
    //Bryce
    public void displayImageToConsole()
    {
-      // TODO Auto-generated method stub
-
+      //these two strings are always 2 longer than signalWidth
+      String horizontalBorder = "--";
+     
+      for(int i = 0; i < actualWidth; i++)
+         horizontalBorder = horizontalBorder + "-";
+ 
+      System.out.print(horizontalBorder);//displays top hyphens
+     
+      for(int row = 0; row < actualHeight; row++) 
+      {
+         System.out.print("|");//left side pipe characters
+         
+         for(int col = 0; col < actualWidth; col++)
+         {
+            if(image.getPixel(row, col) == true)
+               System.out.print("*");
+               
+            else
+               System.out.print(" ");
+         }
+         System.out.print("|");//right side pipe characters
+      }
+      System.out.print(horizontalBorder);//displays bottom hyphens
    }
-   
+
    //Harsandeep
    private void cleanImage()
    {
@@ -107,15 +128,32 @@ public class DataMatrix implements BarcodeIO
    
    //Bryce
    private int computeSignalWidth()
-   {
+   { 
+      int width = 0;
+      int col = 0;
       
+      //adds to width as long as true values are encountered
+      while(image.getPixel(0, col) == true)
+      {
+         col++;
+         width++;
+      }
+      return width;   
    }
    
    //Bryce
    private int computeSignalHeight()
    {
+      int height = 0;
+      int row = 0;
       
+      //adds to height as long as true values are encountered
+      while(image.getPixel(row, 0) == true)
+      {
+         row++;
+         height++;
+      }
+      return height;
    }
-
 }
 
