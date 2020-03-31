@@ -70,19 +70,8 @@ public class DataMatrix implements BarcodeIO
          image = bc.clone();
          cleanImage();
          // find actualWidth
-         for (int i = 0; i<bc.MAX_WIDTH; i++){
-            if (!bc.getPixel(bc.MAX_HEIGHT-1, i)){
-               break;
-            }
-            actualWidth++;
-         }
-         // find actualHeight
-         for (int k = bc.MAX_HEIGHT-1; k>=0; k--){
-            if (!bc.getPixel(i, 0)){
-               break;
-            }
-            actualHeight++;
-         }
+        actualWidth = computeSignalWidth();
+        actualHeight= computeSignalHeight();
       } catch (Exception CloneNotSupportedException) {
          //TODO: handle exception
       }
@@ -104,12 +93,38 @@ public class DataMatrix implements BarcodeIO
     */
    public boolean generateImageFromText()
    {
-      // TODO Auto-generated method stub
-      //generate column
       int x;
       char [] chars = text.toCharArray();
-      for (int k =0; k<chars.length; k++){
-         x = chars[k];
+      // bottom row - spine 
+      for (int i = 0; i<actualWidth+1; i++){
+         image.setPixel(image.MAX_HEIGHT-1, i, true);
+      }
+      //left column - spine
+      int counter = 0;
+      for (int i = image.MAX_HEIGHT-1; i>=0; i--){
+         if (counter == actualHeight){
+            break;
+         }
+         image.setPixel(i, 0, true);
+         counter++;
+      }
+      //right side -- spine 
+      counter = 0;
+      for (int i = image.MAX_HEIGHT-1; i>=0; i--){
+         if (counter == actualHeight){
+            break;
+         }       
+         image.setPixel(i, actualWidth+1, i%2!=0);
+         counter++;
+      }
+      //top row - spine
+      for (int i = 0; i<actualWidth+1; i++){
+         image.setPixel(image.MAX_HEIGHT-2-actualHeight, i, i%2==0);
+      }
+
+      // filling in barcode data
+      for (int k =1; k<actualWidth+1; k++){     
+         x = chars[k-1];
          WriteCharToCol(k, x);
       }
       return false;
@@ -121,14 +136,18 @@ public class DataMatrix implements BarcodeIO
     * @return - returns true
     */
    private boolean WriteCharToCol(int col, int code){
-      String b = Integer.toBinaryString(code);
+      String b = Integer.toBinaryString(code);           
       int counter = 1;
-      for (int i = computeSignalHeight()-1; i >= 0; i--){
+      // convert binary string into barcode columns
+      for (int i = image.MAX_HEIGHT-2; i >= image.MAX_HEIGHT-actualHeight-1; i--){ 
+         // if you've reached the end of the binary string, and not the end of the loop
+         // set the rest to false     
          if (b.length() - counter < 0) {
             image.setPixel(col, i, false);
          }
          else {
-            char var = b.charAt(b.length() -1);
+            //parsing the binary string
+            char var = b.charAt(b.length() -counter);
             if (var == '1'){
                image.setPixel(col, i, true);
             }
