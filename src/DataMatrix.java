@@ -95,7 +95,7 @@ public class DataMatrix implements BarcodeIO
    //Bryce
    public void displayImageToConsole()
    {
-      //these two strings are always 2 longer than signalWidth
+      //this string is always 2 longer than signalWidth
       String horizontalBorder = "--";
      
       for(int i = 0; i < actualWidth; i++)
@@ -129,31 +129,34 @@ public class DataMatrix implements BarcodeIO
    //Bryce
    private int computeSignalWidth()
    { 
-      int width = 0;
-      int col = 0;
-      
-      //adds to width as long as true values are encountered
-      while(image.getPixel(0, col) == true)
-      {
-         col++;
-         width++;
-      }
-      return width;   
+         int width = 0;
+         int col = 0;
+         int row = BarcodeImage.MAX_HEIGHT - 1;
+         
+         //adds to width as long as true values are encountered
+         while(image.getPixel(row, col) == true)
+         {
+            col++;
+            width++;
+         }
+         return width;
    }
    
    //Bryce
    private int computeSignalHeight()
    {
-      int height = 0;
-      int row = 0;
-      
-      //adds to height as long as true values are encountered
-      while(image.getPixel(row, 0) == true)
       {
-         row++;
-         height++;
+         int height = 0;
+         int row = BarcodeImage.MAX_HEIGHT - 1;
+
+         //adds to height as long as true values are encountered
+         while(image.getPixel(row, 0) == true)
+         {
+            row--;
+            height++;
+         }
+         return height;
       }
-      return height;
    }
 }
 
