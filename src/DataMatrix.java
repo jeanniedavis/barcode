@@ -96,31 +96,28 @@ public class DataMatrix implements BarcodeIO
    public void displayImageToConsole()
    {
       //these two strings are always 2 longer than signalWidth
-      String topBorder = "--";
-      String bottomBorder = "--";
+      String horizontalBorder = "--";
      
-      for(int i = 0; i <= computeSignalWidth(); i++)
-      {
-         topBorder = topBorder + "-";
-         bottomBorder = bottomBorder + "-";
-      }
-      
-      System.out.print(topBorder);//displays top hyphens
+      for(int i = 0; i < actualWidth; i++)
+         horizontalBorder = horizontalBorder + "-";
+ 
+      System.out.print(horizontalBorder);//displays top hyphens
      
-      for(int row = 0; row <= computeSignalHeight(); row++) 
+      for(int row = 0; row < actualHeight; row++) 
       {
          System.out.print("|");//left side pipe characters
-         for(int col = 0; col <= computeSignalWidth(); col++)
+         
+         for(int col = 0; col < actualWidth; col++)
          {
-            if(image.getPixel(row,col) == true)
+            if(image.getPixel(row, col) == true)
                System.out.print("*");
                
-            else if (image.getPixel(row,col) == false)
+            else
                System.out.print(" ");
          }
          System.out.print("|");//right side pipe characters
       }
-      System.out.print(bottomBorder);//displays bottom hyphens
+      System.out.print(horizontalBorder);//displays bottom hyphens
    }
 
    //Harsandeep
