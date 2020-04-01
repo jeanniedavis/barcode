@@ -2,58 +2,53 @@
 //Stubs for the DataMatrix Class
 //Labeled who is doing which sections.
 
-public class DataMatrix implements BarcodeIO
-{
-   //DATA - Bryce
+public class DataMatrix implements BarcodeIO {
+   // DATA - Bryce
    public static final char BLACK_CHAR = '*';
-   public static final char WHITE_CHAR = ' ';  
-   
+   public static final char WHITE_CHAR = ' ';
    private BarcodeImage image;
    private String text;
-   
+
    private int actualWidth;
    private int actualHeight;
- 
-   //Constructors - Bryce
-   public DataMatrix()//default
+
+   // Constructors - Bryce
+   public DataMatrix()// default
    {
       text = "";
       actualWidth = 0;
-      actualHeight = 0; 
+      actualHeight = 0;
       image = new BarcodeImage();
    }
 
-   public DataMatrix(BarcodeImage image)//image only
+   public DataMatrix(BarcodeImage image)// image only
    {
       text = "";
-      
-      if(scan(image) == false)
-      {
+
+      if (scan(image) == false) {
          actualWidth = 0;
          actualHeight = 0;
          image = new BarcodeImage();
       }
-    
+
    }
-   
-   public DataMatrix(String text)//text only
+
+   public DataMatrix(String text)// text only
    {
       actualWidth = 0;
       actualHeight = 0;
       image = new BarcodeImage();
-      
-      if(readText(text) == false)
+
+      if (readText(text) == false)
          text = "";
    }
-   
-   //Accessors - Bryce
-   public int getActualWidth()
-   {
+
+   // Accessors - Bryce
+   public int getActualWidth() {
       return actualWidth;
    }
-   
-   public int getActualHeight()
-   {
+
+   public int getActualHeight() {
       return actualHeight;
    }
    
@@ -84,11 +79,13 @@ public class DataMatrix implements BarcodeIO
  
  
     //Harsandeep
-    public boolean readText(String text)
-    {
-       // TODO Auto-generated method stub
-       return false;
-    }
+    public boolean readText(String text) {
+      if (text == null)
+         return false;
+
+      this.text = text;
+      return true;
+   }
  
     /**
      * @author Jeannie
@@ -166,11 +163,31 @@ public class DataMatrix implements BarcodeIO
     }
  
     //Harsandeep
-    public boolean translateImageToText()
-    {
-       // TODO Auto-generated method stub
-       return false;
-    }
+    private char readCharFromCol(int col) {
+      int readChar = 0;
+      int fromCol = 0;
+
+      for (int i = BarcodeImage.MAX_HEIGHT - 2; i > BarcodeImage.MAX_HEIGHT - actualHeight; i--) {
+         if (this.image.getPixel(i, col)) {
+            readChar = readChar + (int) Math.pow(2, fromCol);
+         }
+         fromCol++;
+      }
+      return (char) (readChar);
+   }
+
+    //Harsandeep
+    // translating image to text by decoding each column
+   // translating image to text by decoding each column
+   public boolean translateImageToText() {
+      char colChar[] = new char[actualWidth - 1];
+      for (int i = 1; i < actualWidth - 1; i++) {
+         colChar[i] = readCharFromCol(i);
+      }
+      String colString = new String(colChar);
+      text = colString;
+      return true;
+   }
  
     //
     /**
@@ -211,9 +228,36 @@ public class DataMatrix implements BarcodeIO
    }
 
    //Harsandeep
-   private void cleanImage()
-   {
-      
+   // move the signal to the lower-left of the larger 2D array 
+   //with cleanImage method.
+   private void cleanImage() {
+      int startRow = 0;
+      int startColumn = 0;
+		boolean spine = false;
+
+		for (int i = BarcodeImage.MAX_HEIGHT - 1; i > 0; i--) {
+			for (int j = 0; j < (BarcodeImage.MAX_WIDTH - 1); j++) {
+				if (image.getPixel(i, j)) {
+					startRow = i;
+					startColumn = j;
+					spine = true;
+					break;
+				}
+				if (spine == true) {
+					break;
+				}
+         }
+   int row = BarcodeImage.MAX_HEIGHT - 1;
+         for (i = startRow; i > 0; i--) {
+            int column = 0;
+            for (int j = startColumn; j < BarcodeImage.MAX_WIDTH; j++) {
+               boolean value = image.getPixel(i, j);
+               image.setPixel(row, column, value);
+               column++;
+            }
+            row--;
+         }
+      }
    }
    
    //Bryce
@@ -247,4 +291,3 @@ public class DataMatrix implements BarcodeIO
          return height;
    }
 }
-
