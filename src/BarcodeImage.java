@@ -38,13 +38,13 @@ public class BarcodeImage implements Cloneable
       }
       
       int col;
-      int arrayIndex = 0; //Index for strData array
+      int arrayIndex = height - 1;
       for(int row = MAX_HEIGHT - 1; row >= 0; row--)
       {
          col = 0;
          
          //Set columns according to strData input
-         if(row < height) 
+         if(arrayIndex >= 0) 
          {
             width = strData[arrayIndex].length();
             
@@ -60,7 +60,7 @@ public class BarcodeImage implements Cloneable
                }
             }
             
-            arrayIndex++;
+            arrayIndex--;
          }
          
          //Set remaining columns to false
@@ -131,7 +131,7 @@ public class BarcodeImage implements Cloneable
    public void displayToConsole()
    {
       String line;
-      for(int row = MAX_HEIGHT - 1; row >= 0; row--)
+      for(int row = 0; row < MAX_HEIGHT; row++)
       {
          line = "";
          

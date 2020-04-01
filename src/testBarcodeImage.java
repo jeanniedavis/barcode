@@ -95,7 +95,7 @@ public class testBarcodeImage
       //This shows that it actually made a deep copy.
       for(int i = 0; i < 10; i++)
       {
-         cloneImage.setPixel(0, i, true);
+         cloneImage.setPixel(BarcodeImage.MAX_HEIGHT - 1, i, true);
       }
      
       System.out.println("\n\n---Testing Clone()---");
