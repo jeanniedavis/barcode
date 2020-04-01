@@ -115,18 +115,31 @@ public class DataMatrix implements BarcodeIO {
    private void cleanImage() {
       int startRow = 0;
       int startColumn = 0;
-    
-      int row = BarcodeImage.MAX_HEIGHT - 1;
-      for (int i = startRow; i > 0; i--) {
-         int column = 0;
-         for (int j = startColumn; j < BarcodeImage.MAX_WIDTH; j++) {
-            boolean value = image.getPixel(i, j);
-            image.setPixel(row, column, value);
-            column++;
-         }
-         row--;
-      }
-   }
+		boolean spine = false;
+
+		for (int i = BarcodeImage.MAX_HEIGHT; i > 0; i--) {
+			for (int j = 0; j < (BarcodeImage.MAX_WIDTH - 1); j++) {
+				if (image.getPixel(i, j)) {
+					startRow = i;
+					startColumn = j;
+					spine = true;
+					break;
+				}
+			}
+		}
+
+
+	int row = BarcodeImage.MAX_HEIGHT - 1;
+	for (int i = startRow; i > 0; i--) {
+		int column = 0;
+		for (int j = startColumn; j < BarcodeImage.MAX_WIDTH; j++) {
+			boolean value = image.getPixel(i, j);
+			image.setPixel(row, column, value);
+			column++;
+		}
+		row--;
+	}
+}
 
    // Bryce
    private int computeSignalWidth() {
