@@ -218,7 +218,7 @@ public class DataMatrix implements BarcodeIO {
      
       for(int row = 0; row < actualHeight; row++) 
       {
-         System.out.print("|");//left side pipe characters
+         System.out.print("\n|");//left side pipe characters
          
          for(int col = 0; col < actualWidth; col++)
          {
@@ -230,7 +230,7 @@ public class DataMatrix implements BarcodeIO {
          }
          System.out.print("|");//right side pipe characters
       }
-      System.out.print(horizontalBorder);//displays bottom hyphens
+      System.out.print('\n' + horizontalBorder);//displays bottom hyphens
    }
 
    //Harsandeep
