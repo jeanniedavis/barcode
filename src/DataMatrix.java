@@ -73,7 +73,9 @@ public class DataMatrix implements BarcodeIO {
             image.displayToConsole(); //Test
             // find actualWidth
            actualWidth = computeSignalWidth();
+           System.out.println("\nactualWidth = " + actualWidth);
            actualHeight= computeSignalHeight();
+           System.out.println("\nactualHeight = " + actualHeight);
           }
        } catch (Exception CloneNotSupportedException) {
           //TODO: handle exception
