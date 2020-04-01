@@ -93,6 +93,7 @@ public class DataMatrix implements BarcodeIO
    }
 
    //Bryce
+   //this method displays the image with a border surrounding it
    public void displayImageToConsole()
    {
       //this string is always 2 longer than signalWidth
@@ -145,7 +146,6 @@ public class DataMatrix implements BarcodeIO
    //Bryce
    private int computeSignalHeight()
    {
-      {
          int height = 0;
          int row = BarcodeImage.MAX_HEIGHT - 1;
 
@@ -156,7 +156,6 @@ public class DataMatrix implements BarcodeIO
             height++;
          }
          return height;
-      }
    }
 }
 
