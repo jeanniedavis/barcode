@@ -38,13 +38,13 @@ public class BarcodeImage implements Cloneable
       }
       
       int col;
-      int arrayIndex = 0; //Index for strData array
+      int arrayIndex = height - 1;
       for(int row = MAX_HEIGHT - 1; row >= 0; row--)
       {
          col = 0;
          
          //Set columns according to strData input
-         if(row < height) 
+         if(arrayIndex >= 0) 
          {
             width = strData[arrayIndex].length();
             
@@ -60,7 +60,7 @@ public class BarcodeImage implements Cloneable
                }
             }
             
-            arrayIndex++;
+            arrayIndex--;
          }
          
          //Set remaining columns to false
@@ -74,7 +74,8 @@ public class BarcodeImage implements Cloneable
    
    boolean getPixel(int row, int col)
    {
-      if(row < 0 || col < 0 || row >= imageData.length || col >= imageData[0].length)
+      if(row < 0 || col < 0 || row >= imageData.length 
+            || col >= imageData[0].length)
       {
          return false;
       }
@@ -86,7 +87,8 @@ public class BarcodeImage implements Cloneable
    
    boolean setPixel(int row, int col, boolean value)
    {
-      if(row < 0 || col < 0 || row >= imageData.length || col >= imageData[0].length)
+      if(row < 0 || col < 0 || row >= imageData.length 
+            || col >= imageData[0].length)
       {
          return false;
       }
@@ -129,7 +131,7 @@ public class BarcodeImage implements Cloneable
    public void displayToConsole()
    {
       String line;
-      for(int row = MAX_HEIGHT - 1; row >= 0; row--)
+      for(int row = 0; row < MAX_HEIGHT; row++)
       {
          line = "";
          
@@ -150,18 +152,19 @@ public class BarcodeImage implements Cloneable
    }
    
    //Implements the clonable interface
-   public BarcodeImage clone() throws CloneNotSupportedException
+   public Object clone() throws CloneNotSupportedException
    {
       //Clone BarcodeImage object
-      BarcodeImage copy = (BarcodeImage)super.clone();
-         
-      //Clone each row of imageData 2d boolean array to copy
+      BarcodeImage copy = (BarcodeImage) super.clone();
+      
+      
+      //Clone each row of imageData 2d boolean array to create a deep copy.
       copy.imageData = new boolean[MAX_HEIGHT][];
       for(int row = 0; row < MAX_HEIGHT; row++)
       {
          copy.imageData[row] = imageData[row].clone();
       }
-         
+      
       return copy;
    }
    
