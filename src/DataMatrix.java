@@ -65,11 +65,17 @@ public class DataMatrix implements BarcodeIO {
        try {
           clone = bc.clone();
           if (clone instanceof BarcodeImage){
-             image = (BarcodeImage) clone;
+            image = (BarcodeImage) clone;
+            System.out.println("Print clone:"); //Test
+            image.displayToConsole(); //Test
             cleanImage();
+            System.out.println("Print clone after cleaning:"); //Test
+            image.displayToConsole(); //Test
             // find actualWidth
            actualWidth = computeSignalWidth();
+           System.out.println("\nactualWidth = " + actualWidth);
            actualHeight= computeSignalHeight();
+           System.out.println("\nactualHeight = " + actualHeight);
           }
        } catch (Exception CloneNotSupportedException) {
           //TODO: handle exception
@@ -233,30 +239,43 @@ public class DataMatrix implements BarcodeIO {
    private void cleanImage() {
       int startRow = 0;
       int startColumn = 0;
-		boolean spine = false;
+      boolean spine = false;
 
-		for (int i = BarcodeImage.MAX_HEIGHT - 1; i > 0; i--) {
-			for (int j = 0; j < (BarcodeImage.MAX_WIDTH - 1); j++) {
-				if (image.getPixel(i, j)) {
-					startRow = i;
-					startColumn = j;
-					spine = true;
-					break;
-				}
-				if (spine == true) {
-					break;
-				}
+	       
+      for (int i = BarcodeImage.MAX_HEIGHT; i > 0; i--) {
+         for (int j = 0; j < (BarcodeImage.MAX_WIDTH - 1); j++) {
+            if (image.getPixel(i, j)) {
+	            startRow = i;
+	            startColumn = j;
+	            spine = true;
+	            break;
+	         }
          }
-   int row = BarcodeImage.MAX_HEIGHT - 1;
-         for (i = startRow; i > 0; i--) {
-            int column = 0;
-            for (int j = startColumn; j < BarcodeImage.MAX_WIDTH; j++) {
-               boolean value = image.getPixel(i, j);
+
+	      if (spine) {
+	         break;
+	      }
+      }
+      
+      //If image is blank, there is no need to move it.
+      if(spine == false)
+         return;
+	         
+      int row = BarcodeImage.MAX_HEIGHT - 1;
+      for (int i = startRow; i > 0; i--) {
+         int column = 0;
+         for (int j = startColumn; j < BarcodeImage.MAX_WIDTH; j++) {
+            boolean value = image.getPixel(i, j);
+            //Check if pixel is not blank.
+            if(value) {
+               //Duplicate value near lower left corner
                image.setPixel(row, column, value);
-               column++;
+               //Reset value to blank
+               image.setPixel(i, j, false);
             }
-            row--;
+            column++;
          }
+	      row--;
       }
    }
    
