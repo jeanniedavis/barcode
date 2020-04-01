@@ -66,16 +66,10 @@ public class DataMatrix implements BarcodeIO {
           clone = bc.clone();
           if (clone instanceof BarcodeImage){
             image = (BarcodeImage) clone;
-            System.out.println("Print clone:"); //Test
-            image.displayToConsole(); //Test
             cleanImage();
-            System.out.println("Print clone after cleaning:"); //Test
-            image.displayToConsole(); //Test
-            // find actualWidth
+
            actualWidth = computeSignalWidth();
-           System.out.println("\nactualWidth = " + actualWidth);
            actualHeight= computeSignalHeight();
-           System.out.println("\nactualHeight = " + actualHeight);
           }
        } catch (Exception CloneNotSupportedException) {
           return false;
@@ -221,21 +215,22 @@ public class DataMatrix implements BarcodeIO {
  
       System.out.print(horizontalBorder);//displays top hyphens
      
-      for(int row = 0; row < actualHeight; row++) 
+      int row = BarcodeImage.MAX_HEIGHT - 1 - actualHeight;
+      for(; row < BarcodeImage.MAX_HEIGHT; row++) 
       {
          System.out.print("\n|");//left side pipe characters
          
          for(int col = 0; col < actualWidth; col++)
          {
             if(image.getPixel(row, col) == true)
-               System.out.print("*");
+               System.out.print(BLACK_CHAR);
                
             else
-               System.out.print(" ");
+               System.out.print(WHITE_CHAR);
          }
          System.out.print("|");//right side pipe characters
       }
-      System.out.print('\n' + horizontalBorder);//displays bottom hyphens
+      System.out.print('\n' + horizontalBorder + "\n\n");//displays bottom hyphens
    }
 
    //Harsandeep
