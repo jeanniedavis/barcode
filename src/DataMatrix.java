@@ -79,12 +79,13 @@ public class DataMatrix implements BarcodeIO {
  
  
     //Harsandeep
-    public boolean readText(String text)
-    {
-       // TODO Auto-generated method stub
-       this.text = text;
+    public boolean readText(String text) {
+      if (text == null)
+         return false;
+
+      this.text = text;
       return true;
-    }
+   }
  
     /**
      * @author Jeannie
@@ -174,7 +175,7 @@ public class DataMatrix implements BarcodeIO {
       }
       return (char) (readChar);
    }
-   
+
     //Harsandeep
     // translating image to text by decoding each column
    // translating image to text by decoding each column
