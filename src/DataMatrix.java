@@ -78,9 +78,9 @@ public class DataMatrix implements BarcodeIO {
            System.out.println("\nactualHeight = " + actualHeight);
           }
        } catch (Exception CloneNotSupportedException) {
-          //TODO: handle exception
+          return false;
        }
-       return false;
+       return true;
     }
  
  
