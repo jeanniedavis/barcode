@@ -101,6 +101,8 @@ public class DataMatrix implements BarcodeIO {
     public boolean generateImageFromText()
     {
        image = new BarcodeImage();
+       actualHeight = 10;
+       actualWidth = text.length() + 2;
        int x;
        char [] chars = text.toCharArray();
        // bottom row - spine 
@@ -131,10 +133,11 @@ public class DataMatrix implements BarcodeIO {
        }
  
        // filling in barcode data
-       for (int k =1; k<actualWidth; k++){     
+       for (int k =1; k<actualWidth -1 ; k++){     
           x = chars[k-1];
           WriteCharToCol(k, x);
        }
+       
        return false;
     }
     /**
