@@ -80,7 +80,7 @@ public class DataMatrix implements BarcodeIO {
        } catch (Exception CloneNotSupportedException) {
           //TODO: handle exception
        }
-       return false;
+       return true;
     }
  
  
@@ -127,11 +127,11 @@ public class DataMatrix implements BarcodeIO {
        }
        //top row - spine
        for (int i = 0; i<actualWidth+1; i++){
-          image.setPixel(image.MAX_HEIGHT-2-actualHeight, i, i%2==0);
+          image.setPixel(image.MAX_HEIGHT-1-actualHeight, i, i%2==0);
        }
  
        // filling in barcode data
-       for (int k =1; k<actualWidth+1; k++){     
+       for (int k =1; k<actualWidth; k++){     
           x = chars[k-1];
           WriteCharToCol(k, x);
        }
@@ -151,16 +151,16 @@ public class DataMatrix implements BarcodeIO {
           // if you've reached the end of the binary string, and not the end of the loop
           // set the rest to false     
           if (b.length() - counter < 0) {
-             image.setPixel(col, i, false);
+             image.setPixel(i, col, false);
           }
           else {
              //parsing the binary string
              char var = b.charAt(b.length() -counter);
              if (var == '1'){
-                image.setPixel(col, i, true);
+                image.setPixel(i, col, true);
              }
              else {
-                image.setPixel(col, i, false);
+                image.setPixel(i, col, false);
              }
           }
           counter++;
