@@ -56,7 +56,7 @@ public class DataMatrix implements BarcodeIO
       return actualHeight;
    }
    
-      /**
+   /**
     * @author Jeannie
     @param Barcode - accepts a Barcode Image to create a cloned image to store 
     * calls cleanImage in order to lower-left justify the Barcode Image 
@@ -64,13 +64,17 @@ public class DataMatrix implements BarcodeIO
     */
     public boolean scan(BarcodeImage bc)
     {
+       Object clone;
        // TODO Auto-generated method stub
        try {
-          image = bc.clone();
-          cleanImage();
-          // find actualWidth
-         actualWidth = computeSignalWidth();
-         actualHeight= computeSignalHeight();
+          clone = bc.clone();
+          if (clone instanceof BarcodeImage){
+             image = (BarcodeImage) clone;
+            cleanImage();
+            // find actualWidth
+           actualWidth = computeSignalWidth();
+           actualHeight= computeSignalHeight();
+          }
        } catch (Exception CloneNotSupportedException) {
           //TODO: handle exception
        }
@@ -92,6 +96,7 @@ public class DataMatrix implements BarcodeIO
      */
     public boolean generateImageFromText()
     {
+       image = new BarcodeImage();
        int x;
        char [] chars = text.toCharArray();
        // bottom row - spine 
