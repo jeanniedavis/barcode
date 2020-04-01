@@ -137,7 +137,7 @@ public class DataMatrix implements BarcodeIO {
           x = chars[k-1];
           WriteCharToCol(k, x);
        }
-       
+      
        return false;
     }
     /**
@@ -150,22 +150,24 @@ public class DataMatrix implements BarcodeIO {
        String b = Integer.toBinaryString(code);           
        int counter = 1;
        // convert binary string into barcode columns
-       for (int i = image.MAX_HEIGHT-2; i >= image.MAX_HEIGHT-actualHeight-1; i--){ 
+       int row = image.MAX_HEIGHT - 2;
+       for (int i = 0; i < actualHeight - 1; i++){ 
           // if you've reached the end of the binary string, and not the end of the loop
           // set the rest to false     
           if (b.length() - counter < 0) {
-             image.setPixel(i, col, false);
+             image.setPixel(row, col, false);
           }
           else {
              //parsing the binary string
              char var = b.charAt(b.length() -counter);
              if (var == '1'){
-                image.setPixel(i, col, true);
+                image.setPixel(row, col, true);
              }
              else {
-                image.setPixel(i, col, false);
+                image.setPixel(row, col, false);
              }
           }
+          row--;
           counter++;
        }
        return true;
