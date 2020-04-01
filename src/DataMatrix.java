@@ -117,12 +117,15 @@ public class DataMatrix implements BarcodeIO {
       int startColumn = 0;
 		boolean spine = false;
 
-		for (int i = BarcodeImage.MAX_HEIGHT; i > 0; i--) {
+		for (int i = BarcodeImage.MAX_HEIGHT - 1; i > 0; i--) {
 			for (int j = 0; j < (BarcodeImage.MAX_WIDTH - 1); j++) {
 				if (image.getPixel(i, j)) {
 					startRow = i;
 					startColumn = j;
 					spine = true;
+					break;
+				}
+				if (spine == true) {
 					break;
 				}
 			}
