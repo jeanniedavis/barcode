@@ -65,8 +65,12 @@ public class DataMatrix implements BarcodeIO {
        try {
           clone = bc.clone();
           if (clone instanceof BarcodeImage){
-             image = (BarcodeImage) clone;
+            image = (BarcodeImage) clone;
+            System.out.println("Print clone:"); //Test
+            image.displayToConsole(); //Test
             cleanImage();
+            System.out.println("Print clone after cleaning:"); //Test
+            image.displayToConsole(); //Test
             // find actualWidth
            actualWidth = computeSignalWidth();
            actualHeight= computeSignalHeight();
