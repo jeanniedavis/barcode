@@ -111,12 +111,8 @@ public class DataMatrix implements BarcodeIO {
    }
 
    // move the signal to the lower-left of the larger 2D array 
-   //by calling moveImageToLowerLeft method.
+   //with cleanImage method.
    private void cleanImage() {
-      moveImageToLowerLeft();
-   }
-
-   private void moveImageToLowerLeft() {
       int startRow = 0;
       int startColumn = 0;
       boolean spine = false;
