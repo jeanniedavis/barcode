@@ -101,6 +101,8 @@ public class DataMatrix implements BarcodeIO {
     public boolean generateImageFromText()
     {
        image = new BarcodeImage();
+       actualHeight = 10;
+       actualWidth = text.length() + 2;
        int x;
        char [] chars = text.toCharArray();
        // bottom row - spine 
@@ -127,14 +129,15 @@ public class DataMatrix implements BarcodeIO {
        }
        //top row - spine
        for (int i = 0; i<actualWidth+1; i++){
-          image.setPixel(image.MAX_HEIGHT-2-actualHeight, i, i%2==0);
+          image.setPixel(image.MAX_HEIGHT-1-actualHeight, i, i%2==0);
        }
  
        // filling in barcode data
-       for (int k =1; k<actualWidth+1; k++){     
+       for (int k =1; k<actualWidth -1 ; k++){     
           x = chars[k-1];
           WriteCharToCol(k, x);
        }
+      
        return false;
     }
     /**
@@ -147,22 +150,24 @@ public class DataMatrix implements BarcodeIO {
        String b = Integer.toBinaryString(code);           
        int counter = 1;
        // convert binary string into barcode columns
-       for (int i = image.MAX_HEIGHT-2; i >= image.MAX_HEIGHT-actualHeight-1; i--){ 
+       int row = image.MAX_HEIGHT - 2;
+       for (int i = 0; i < actualHeight - 1; i++){ 
           // if you've reached the end of the binary string, and not the end of the loop
           // set the rest to false     
           if (b.length() - counter < 0) {
-             image.setPixel(col, i, false);
+             image.setPixel(row, col, false);
           }
           else {
              //parsing the binary string
              char var = b.charAt(b.length() -counter);
              if (var == '1'){
-                image.setPixel(col, i, true);
+                image.setPixel(row, col, true);
              }
              else {
-                image.setPixel(col, i, false);
+                image.setPixel(row, col, false);
              }
           }
+          row--;
           counter++;
        }
        return true;
